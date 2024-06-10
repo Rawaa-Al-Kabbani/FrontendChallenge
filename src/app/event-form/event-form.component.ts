@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { ReactiveFormsModule } from '@angular/forms'
-import { formateDate, getTomorrowsDate } from '../../helpers/date-helpers'
+import { formatDate, getTomorrowsDate } from '../../helpers/date-helpers'
 import moment from 'moment'
 
 @Component({
@@ -17,7 +17,7 @@ export class EventFormComponent {
       if (!date) {
         return ''
       }
-      return formateDate(date)
+      return formatDate(date)
     },
   })
   defaultEventDate?: string
@@ -25,7 +25,7 @@ export class EventFormComponent {
   @Output() titleChange = new EventEmitter<string>()
   @Output() dateChange = new EventEmitter<string>()
 
-  minimumDate: string = formateDate(getTomorrowsDate())
+  minimumDate: string = formatDate(getTomorrowsDate())
 
   onChangeTitle(event: Event): void {
     const input = event.target as HTMLInputElement
