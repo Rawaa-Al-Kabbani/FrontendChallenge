@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ScaledTextComponent } from '../scaled-text/scaled-text.component'
 import { EventFormComponent } from '../event-form/event-form.component'
-import { getCountdown, parseDateString } from '../../helpers/date-helpers'
+import moment from 'moment'
 
 @Component({
   selector: 'app-countdown',
@@ -14,7 +14,7 @@ export class CountdownComponent implements OnInit, OnDestroy {
   eventTitlePrefix: string = 'Time to '
 
   eventTitle?: string
-  eventDate?: Date
+  eventDate?: moment.Moment
 
   countdownInterval?: NodeJS.Timeout
   countdownText?: string
@@ -26,9 +26,9 @@ export class CountdownComponent implements OnInit, OnDestroy {
   loadEventDate(): void {
     const date = localStorage.getItem('eventDate')
     if (date) {
-      this.eventDate = parseDateString(date)
+      this.eventDate = moment(date)
     } else {
-      this.eventDate = new Date()
+      this.eventDate = moment('2024-06-21')
     }
   }
 
@@ -51,7 +51,7 @@ export class CountdownComponent implements OnInit, OnDestroy {
 
   onDateChange(newDate: string): void {
     localStorage.setItem('eventDate', newDate)
-    this.eventDate = parseDateString(newDate)
+    this.eventDate = moment(newDate)
     this.startInterval()
   }
 
@@ -69,6 +69,29 @@ export class CountdownComponent implements OnInit, OnDestroy {
       return
     }
 
-    this.countdownText = getCountdown(this.eventDate)
+    this.countdownText = this.getCountdownString(this.eventDate)
+  }
+
+  getCountdownString(endDate: moment.Moment): string {
+    const currentTimestamp = moment()
+
+    let difference = endDate.diff(currentTimestamp) / 1000
+
+    if (difference < 0) {
+      return 'Event is already finished'
+    }
+
+    const days = Math.floor(difference / (3600 * 24))
+    difference -= days * 3600 * 24
+
+    const hours = Math.floor(difference / 3600) % 24
+    difference -= hours * 3600
+
+    const minutes = Math.floor(difference / 60) % 60
+    difference -= minutes * 60
+
+    const seconds = Math.floor(difference % 60)
+
+    return `${days} days, ${hours} h, ${minutes}m, ${seconds}s`
   }
 }
