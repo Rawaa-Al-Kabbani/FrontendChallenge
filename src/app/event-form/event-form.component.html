@@ -1,0 +1,16 @@
+<form (submit)="onSubmit($event)" class="form-container">
+  <fieldset>
+    <legend>Title:</legend>
+    <input
+      type="text"
+      placeholder="Enter event name!"
+      (input)="onChangeTitle($event)"
+      (paste)="onChangeTitle($event)"
+    />
+  </fieldset>
+
+  <fieldset>
+    <legend>Date:</legend>
+    <input type="date" [min]="minimumDate" (change)="onChangeDate($event)" />
+  </fieldset>
+</form>
