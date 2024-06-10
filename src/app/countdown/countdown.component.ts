@@ -2,15 +2,19 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ScaledTextComponent } from '../scaled-text/scaled-text.component'
 import { EventFormComponent } from '../event-form/event-form.component'
 import moment from 'moment'
+import { CountdownService } from './countdown.service'
 
 @Component({
   selector: 'app-countdown',
   standalone: true,
   imports: [ScaledTextComponent, EventFormComponent],
+  providers: [CountdownService],
   templateUrl: './countdown.component.html',
   styleUrls: ['./countdown.component.scss'],
 })
 export class CountdownComponent implements OnInit, OnDestroy {
+  constructor(private service: CountdownService) {}
+
   eventTitlePrefix: string = 'Time to '
 
   eventTitle?: string
@@ -69,29 +73,6 @@ export class CountdownComponent implements OnInit, OnDestroy {
       return
     }
 
-    this.countdownText = this.getCountdownString(this.eventDate)
-  }
-
-  getCountdownString(endDate: moment.Moment): string {
-    const currentTimestamp = moment()
-
-    let difference = endDate.diff(currentTimestamp) / 1000
-
-    if (difference < 0) {
-      return 'Event is already finished'
-    }
-
-    const days = Math.floor(difference / (3600 * 24))
-    difference -= days * 3600 * 24
-
-    const hours = Math.floor(difference / 3600) % 24
-    difference -= hours * 3600
-
-    const minutes = Math.floor(difference / 60) % 60
-    difference -= minutes * 60
-
-    const seconds = Math.floor(difference % 60)
-
-    return `${days} days, ${hours} h, ${minutes}m, ${seconds}s`
+    this.countdownText = this.service.getCountdownString(this.eventDate)
   }
 }
