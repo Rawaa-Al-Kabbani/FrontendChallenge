@@ -4,9 +4,9 @@ import moment from 'moment'
 @Injectable()
 export class CountdownService {
   getCountdownString(endDate: moment.Moment): string {
-    const currentTimestamp = moment()
+    const currentDate = moment()
 
-    let difference = endDate.diff(currentTimestamp) / 1000
+    let difference = endDate.diff(currentDate) / 1000
 
     if (difference < 0) {
       return 'Event is already finished'
