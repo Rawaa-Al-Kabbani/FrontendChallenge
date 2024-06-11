@@ -74,3 +74,12 @@ To run the tests, first ensure you have installed the dependencies (see above), 
 If you want to run the tests in headless mode, simply run:
 
 `npm run test:headless`
+
+## Deployment
+
+The app is deployed to Azure Web Apps automatically by GitHub Actions when changes are pushed to master.
+The pipeline also ensures the tests are passing before deploying.
+
+The URL of the app is: https://countdown-app.azurewebsites.net/
+
+
