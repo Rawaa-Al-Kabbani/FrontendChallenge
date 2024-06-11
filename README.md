@@ -77,9 +77,14 @@ If you want to run the tests in headless mode, simply run:
 
 ## Deployment
 
-The app is deployed to Azure Web Apps automatically by GitHub Actions when changes are pushed to master.
-The pipeline also ensures the tests are passing before deploying.
+The app is deployed to Azure Web Apps automatically by GitHub Actions when changes are pushed to
+master. The pipeline also ensures the tests are passing before deploying.
 
 The URL of the app is: https://countdown-app.azurewebsites.net/
 
+## Suggestions for improving the app:
 
+0. Add more extensive testing, end-to-end testing, for example
+
+1. Add a share functionality where the event is saved in, for example, Firebase and the user is
+   given a link they can share with other people
