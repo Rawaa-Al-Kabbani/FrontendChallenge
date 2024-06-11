@@ -30,8 +30,11 @@ export class CountdownComponent implements OnInit, OnDestroy {
   loadEventDate(): void {
     const date = localStorage.getItem('eventDate')
     if (date) {
-      this.eventDate = moment(date)
-    } else {
+      const parsedDate = moment(date)
+      if (parsedDate.isValid()) {
+        this.eventDate = parsedDate
+      }
+    } else if (date === null) {
       this.eventDate = moment('2024-06-21')
     }
   }
@@ -55,8 +58,13 @@ export class CountdownComponent implements OnInit, OnDestroy {
 
   onDateChange(newDate: string): void {
     localStorage.setItem('eventDate', newDate)
-    this.eventDate = moment(newDate)
-    this.startInterval()
+    if (newDate) {
+      this.eventDate = moment(newDate)
+      this.startInterval()
+    } else {
+      this.eventDate = undefined
+      this.updateCountdownText()
+    }
   }
 
   startInterval() {
@@ -70,6 +78,7 @@ export class CountdownComponent implements OnInit, OnDestroy {
 
   updateCountdownText(): void {
     if (!this.eventDate) {
+      this.countdownText = undefined
       return
     }
 
