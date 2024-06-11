@@ -48,3 +48,32 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 To get more help on the Angular CLI use `ng help` or go check out the
 [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+## How to run it locally
+
+0. If you are using NVM run `nvm use` to use the recommended Node version.
+
+1. Start by installing the dependencies by running: `npm install`
+
+2. You can now run the app by running: `npm run start`
+
+
+## How to run it using Docker
+
+To run it using Docker start by building the image: `docker build -t countdown-app .`
+
+Then start a container and expose port `8080` by running:
+
+`docker run -p 8080:8080 -t countdown-app`
+
+
+## How to run the tests
+
+To run the tests, first ensure you have installed the dependencies (see above), then simply run:
+
+`npm run test`
+
+If you want to run the tests in headless mode, simply run:
+
+`npm run test:headless`
