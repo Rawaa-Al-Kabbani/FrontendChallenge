@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core'
 import { ScaledTextService } from './scaled-text.service'
+import { ReplaySubject } from 'rxjs'
 
 @Component({
   selector: 'app-scaled-text',
@@ -16,16 +17,20 @@ export class ScaledTextComponent implements OnChanges {
 
   @Input() text?: string
 
+  viewInitRelay = new ReplaySubject()
+
   ngAfterViewInit() {
-    this.service.scaleFontSize(this.textElement)
+    this.viewInitRelay.next(null)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('text' in changes) {
       // Wait for the element to re-render with the new text before triggering the re-scaling of the font size.
-      setTimeout(() => {
-        this.service.scaleFontSize(this.textElement)
-      }, 10)
+      this.viewInitRelay.subscribe(() => {
+        setTimeout(() => {
+          this.service.scaleFontSize(this.textElement)
+        }, 20)
+      })
     }
   }
 
