@@ -65,6 +65,10 @@ Then start a container and expose port `8080` by running:
 
 `docker run -p 8080:8080 -t countdown-app`
 
+## How to run it using docker-compose
+
+To run it using `docker-compose` simply run: `docker-compose up`
+
 ## How to run the tests
 
 To run the tests, first ensure you have installed the dependencies (see above), then simply run:
